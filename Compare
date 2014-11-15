@@ -1,0 +1,77 @@
+package com.example.demo;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import com.vaadin.data.Property;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Upload.FinishedEvent;
+import com.vaadin.ui.Upload.FinishedListener;
+import com.vaadin.ui.Upload.Receiver;
+
+
+public class Compare  implements ClickListener {
+	
+	private FileOutputStream fos = null;
+	private FileInputStream fis = null;
+	private InputStreamReader isr = null;
+
+	private GridLayout grid;
+	private Board board;
+	private boolean win;
+	private String solveFile;
+
+public Compare( GridLayout grid, Board board ){
+	this.grid = grid;
+	this.board = board;
+	
+}
+@Override
+public void buttonClick(ClickEvent event) {
+	compare();
+}
+private boolean compare(){
+	try{
+		fis = new FileInputStream("sudoinput.txt");
+		isr = new InputStreamReader(fis);
+		BufferedReader br = new BufferedReader(isr);
+		String sCurrentLine;
+
+		int row = 0; int col = 0;
+		while ((sCurrentLine = br.readLine()) != null) {
+
+			String[] field = sCurrentLine.split(" ");
+
+			col = 0;
+			for (String s : field ) 
+			{
+				// set to ReadOnly to false to allow for update
+				if (board.getIntegerValue(row, col).toString() == s){
+					continue;
+				}
+				else{
+					win = false;
+				}
+				col++;
+			}
+			row++;
+		}System.out.println(win);
+		}	catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	return this.win;
+	}			
+	
+}
+
