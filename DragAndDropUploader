@@ -1,0 +1,53 @@
+package com.example.demo;
+
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptAll;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.event.dd.acceptcriteria.ServerSideCriterion;
+import com.vaadin.server.StreamVariable;
+import com.vaadin.shared.ui.dd.VerticalDropLocation;
+import com.vaadin.ui.DragAndDropWrapper;
+import com.vaadin.ui.DragAndDropWrapper.WrapperTransferable;
+import com.vaadin.ui.Embedded;
+import com.vaadin.ui.Html5File;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.ProgressIndicator;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Tree.TreeTargetDetails;
+import com.vaadin.ui.VerticalLayout;
+
+import java.io.*;
+
+public class DragAndDropUploader extends VerticalLayout {
+	
+	private static final String REPOSITORY = "https://github.com/vaadin/vaadin.git";
+	
+	public DragAndDropUploader(){
+		final DragAndDropWrapper targetWrapper = new DragAndDropWrapper(Sudoku.grid);
+	
+		targetWrapper.setDropHandler(new DropHandler() {
+
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                // Accept all drops from anywhere
+                return AcceptAll.get();
+            }
+            
+            @Override
+            public void drop(DragAndDropEvent event) {
+                WrapperTransferable t =
+                    (WrapperTransferable) event.getTransferable();
+                
+                // Get the dragged component (not the wrapper)
+                Embedded source = (Embedded) t.getDraggedComponent();
+            
+	}
+		});
+		
+		}
+	}
+
+
+
